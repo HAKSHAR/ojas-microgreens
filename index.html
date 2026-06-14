@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ojas Microgreens</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F5F0E8; --parchment: #EDE5D4; --bark: #7A5C3A; --moss: #5A6B3A;
+    --soil: #3E2E1A; --terracotta: #B5622A; --sage: #8FA67A; --warm-white: #FAF7F2;
+    --text-dark: #2C1F0E; --text-mid: #5C4A30; --text-muted: #8A7560;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--text-dark); font-size: 16px; line-height: 1.7; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(245,240,232,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(122,92,58,0.15); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--soil); }
+  .nav-logo span { color: var(--moss); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { font-size: 0.85rem; color: var(--text-mid); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-cta { background: var(--moss) !important; color: #fff !important; padding: 0.45rem 1.1rem; border-radius: 4px; font-size: 0.82rem !important; }
+  .nav-admin-btn { background: none; border: 1px solid var(--bark); color: var(--bark); padding: 0.38rem 0.9rem; border-radius: 4px; font-size: 0.78rem; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em; text-transform: uppercase; transition: all 0.2s; }
+  .nav-admin-btn:hover { background: var(--bark); color: #fff; }
+
+  /* HERO */
+  .hero { min-height: 100vh; background: var(--cream); display: grid; grid-template-columns: 1fr 1fr; padding-top: 60px; overflow: hidden; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 5rem 6rem; }
+  .hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terracotta); font-weight: 500; margin-bottom: 1.2rem; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem,4.5vw,4.2rem); font-weight: 500; line-height: 1.1; color: var(--soil); margin-bottom: 1.5rem; }
+  .hero-title em { font-style: italic; color: var(--moss); }
+  .hero-desc { font-size: 1.05rem; color: var(--text-mid); max-width: 420px; margin-bottom: 2.5rem; line-height: 1.8; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--terracotta); color: #fff; padding: 0.75rem 1.8rem; border-radius: 4px; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s; display: inline-block; }
+  .btn-primary:hover { background: var(--bark); }
+  .btn-secondary { color: var(--moss); font-size: 0.9rem; text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--moss); padding-bottom: 2px; }
+  .hero-right { background: var(--parchment); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+  /* STATS */
+  .stats-strip { background: var(--soil); color: #fff; display: flex; justify-content: center; flex-wrap: wrap; }
+  .stat { padding: 1.8rem 3.5rem; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); flex: 1; max-width: 220px; min-width: 140px; }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--sage); display: block; }
+  .stat-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 2px; display: block; }
+
+  /* SECTIONS */
+  section { padding: 5rem 6rem; }
+  .section-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terracotta); font-weight: 500; margin-bottom: 0.8rem; display: block; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,3vw,2.8rem); font-weight: 500; color: var(--soil); line-height: 1.2; margin-bottom: 1rem; }
+  .section-sub { font-size: 1rem; color: var(--text-mid); max-width: 520px; line-height: 1.8; }
+
+  /* PRODUCTS */
+  #products { background: var(--warm-white); }
+  .products-header { margin-bottom: 3rem; }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+  .product-card { background: var(--cream); border: 1px solid rgba(122,92,58,0.15); border-radius: 8px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(62,46,26,0.1); }
+  .product-img { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+  .product-body { padding: 1.2rem 1.4rem 1.4rem; }
+  .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: var(--soil); margin-bottom: 0.4rem; }
+  .product-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.8rem; }
+  .product-tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--moss); background: rgba(90,107,58,0.1); padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+  .empty-products { text-align: center; padding: 4rem 2rem; color: var(--text-muted); font-size: 1rem; grid-column: 1/-1; }
+  .empty-products span { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+  /* ABOUT */
+  #about { background: var(--parchment); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-visual { background: var(--cream); border-radius: 8px; height: 400px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(122,92,58,0.15); }
+  .about-values { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.8rem; }
+  .about-value { display: flex; gap: 1rem; align-items: flex-start; }
+  .value-dot { width: 8px; height: 8px; background: var(--terracotta); border-radius: 50%; margin-top: 9px; flex-shrink: 0; }
+  .value-text { font-size: 0.95rem; color: var(--text-mid); line-height: 1.7; }
+  .value-text strong { color: var(--soil); font-weight: 500; }
+
+  /* ORDER */
+  #order { background: var(--warm-white); }
+  .order-header { margin-bottom: 3rem; }
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-bottom: 3rem; }
+  .step { background: var(--cream); border: 1px solid rgba(122,92,58,0.12); border-radius: 8px; padding: 2rem; }
+  .step-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 600; color: rgba(90,107,58,0.25); line-height: 1; margin-bottom: 0.8rem; }
+  .step-title { font-size: 1rem; font-weight: 500; color: var(--soil); margin-bottom: 0.5rem; }
+  .step-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.65; }
+  .order-cta { background: var(--moss); border-radius: 8px; padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .order-cta-text h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 500; color: #fff; margin-bottom: 0.4rem; }
+  .order-cta-text p { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+  .btn-whatsapp { background: #fff; color: var(--moss); padding: 0.85rem 2rem; border-radius: 4px; text-decoration: none; font-weight: 500; font-size: 0.95rem; display: flex; align-items: center; gap: 0.6rem; white-space: nowrap; transition: background 0.2s; flex-shrink: 0; }
+  .btn-whatsapp:hover { background: var(--cream); }
+
+  /* FOOTER */
+  footer { background: var(--soil); color: rgba(255,255,255,0.55); padding: 2.5rem 6rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: #fff; font-weight: 600; }
+  .footer-logo span { color: var(--sage); }
+  footer p { font-size: 0.8rem; }
+
+  /* ADMIN OVERLAY */
+  .admin-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(30,20,10,0.55); backdrop-filter: blur(3px); align-items: center; justify-content: center; }
+  .admin-overlay.open { display: flex; }
+  .admin-panel { background: var(--warm-white); border-radius: 12px; width: 90%; max-width: 700px; max-height: 88vh; overflow-y: auto; box-shadow: 0 24px 64px rgba(0,0,0,0.25); }
+
+  /* LOGIN SCREEN */
+  .login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3.5rem 2.5rem 3rem; text-align: center; }
+  .login-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .login-screen h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; color: var(--soil); margin-bottom: 0.4rem; }
+  .login-screen p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; }
+  .login-field { position: relative; width: 100%; max-width: 300px; margin-bottom: 0.8rem; }
+  .login-field input { width: 100%; padding: 0.72rem 2.8rem 0.72rem 1rem; border: 1px solid rgba(122,92,58,0.3); border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--text-dark); background: #fff; outline: none; transition: border-color 0.2s; }
+  .login-field input:focus { border-color: var(--moss); }
+  .login-toggle { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.1rem; padding: 2px; line-height: 1; }
+  .login-error { color: var(--terracotta); font-size: 0.82rem; margin-bottom: 0.6rem; min-height: 1.1rem; width: 100%; max-width: 300px; text-align: left; }
+  .btn-login { width: 100%; max-width: 300px; background: var(--moss); color: #fff; border: none; padding: 0.75rem; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: background 0.2s; margin-bottom: 0.8rem; }
+  .btn-login:hover { background: var(--bark); }
+  .login-hint { font-size: 0.78rem; color: var(--text-muted); max-width: 300px; }
+
+  /* ADMIN PANEL INNER */
+  .admin-panel-inner { display: none; }
+  .admin-panel-inner.visible { display: block; }
+  .admin-header { padding: 1.6rem 2rem; border-bottom: 1px solid rgba(122,92,58,0.15); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--warm-white); z-index: 1; border-radius: 12px 12px 0 0; }
+  .admin-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--soil); }
+  .admin-header-right { display: flex; align-items: center; gap: 0.8rem; }
+  .admin-logout { font-size: 0.78rem; color: var(--text-muted); background: none; border: 1px solid rgba(122,92,58,0.2); cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 0.3rem 0.7rem; border-radius: 4px; transition: all 0.15s; }
+  .admin-logout:hover { border-color: var(--terracotta); color: var(--terracotta); }
+  .admin-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); line-height: 1; padding: 4px 8px; border-radius: 4px; transition: background 0.15s; }
+  .admin-close:hover { background: var(--parchment); }
+  .admin-body { padding: 2rem; }
+  .admin-section-title { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); font-weight: 500; margin-bottom: 1.2rem; display: block; }
+  .add-form { background: var(--cream); border: 1px solid rgba(122,92,58,0.15); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1/-1; }
+  .form-group label { font-size: 0.78rem; font-weight: 500; color: var(--text-mid); letter-spacing: 0.04em; text-transform: uppercase; }
+  .form-group input, .form-group textarea, .form-group select { padding: 0.6rem 0.85rem; border: 1px solid rgba(122,92,58,0.25); border-radius: 5px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text-dark); background: #fff; transition: border-color 0.2s; outline: none; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--moss); }
+  .form-group textarea { resize: vertical; min-height: 70px; }
+  .btn-add { background: var(--moss); color: #fff; border: none; padding: 0.7rem 1.6rem; border-radius: 5px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .btn-add:hover { background: var(--bark); }
+  .admin-products-list { display: flex; flex-direction: column; gap: 0.8rem; }
+  .admin-product-item { background: var(--cream); border: 1px solid rgba(122,92,58,0.15); border-radius: 7px; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 1rem; }
+  .admin-product-emoji { font-size: 1.8rem; flex-shrink: 0; }
+  .admin-product-info { flex: 1; min-width: 0; }
+  .admin-product-info strong { display: block; font-size: 0.95rem; color: var(--soil); font-weight: 500; }
+  .admin-product-info span { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+  .btn-delete { background: none; border: 1px solid rgba(181,98,42,0.3); color: var(--terracotta); padding: 0.35rem 0.8rem; border-radius: 4px; font-size: 0.78rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; flex-shrink: 0; }
+  .btn-delete:hover { background: var(--terracotta); color: #fff; }
+
+  /* CHANGE PASSWORD SECTION */
+  .change-pw-form { background: var(--cream); border: 1px solid rgba(122,92,58,0.15); border-radius: 8px; padding: 1.5rem; margin-top: 2rem; }
+  .change-pw-form .form-row { margin-bottom: 0.8rem; }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--soil); color: #fff; padding: 0.7rem 1.5rem; border-radius: 6px; font-size: 0.88rem; opacity: 0; transition: all 0.3s; z-index: 999; pointer-events: none; white-space: nowrap; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 4rem 2rem 3rem; }
+    .hero-right { height: 280px; }
+    section { padding: 4rem 2rem; }
+    #about { grid-template-columns: 1fr; }
+    .about-visual { height: 240px; }
+    .steps { grid-template-columns: 1fr; }
+    nav { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    footer { padding: 2rem; flex-direction: column; text-align: center; }
+    .order-cta { padding: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .admin-panel { width: 96%; max-height: 92vh; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Ojas <span>Microgreens</span></div>
+  <ul class="nav-links">
+    <li><a href="#products">Our Greens</a></li>
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#order" class="nav-cta">Order Now</a></li>
+  </ul>
+  <button class="nav-admin-btn" onclick="openAdmin()">&#9881; Admin</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Grown with care &middot; Harvested fresh</p>
+    <h1 class="hero-title">Tiny greens,<br><em>extraordinary</em><br>nourishment.</h1>
+    <p class="hero-desc">Ojas Microgreens brings you the freshest, most nutrient-dense microgreens &mdash; grown right here, delivered straight to your home or kitchen.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Explore Our Greens</a>
+      <a href="#order" class="btn-secondary">How to order &rarr;</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <svg viewBox="0 0 420 480" width="360" height="420" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="340" width="300" height="40" rx="6" fill="#7A5C3A" opacity="0.25"/>
+      <rect x="70" y="310" width="280" height="36" rx="5" fill="#7A5C3A" opacity="0.18"/>
+      <rect x="78" y="290" width="264" height="26" rx="4" fill="#5C3D1E" opacity="0.35"/>
+      <line x1="100" y1="289" x2="92" y2="210" stroke="#5A6B3A" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="92" cy="204" rx="14" ry="9" fill="#6A8048" transform="rotate(-20,92,204)"/>
+      <line x1="115" y1="289" x2="108" y2="185" stroke="#5A6B3A" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="108" cy="178" rx="16" ry="10" fill="#7A9458" transform="rotate(10,108,178)"/>
+      <line x1="130" y1="289" x2="138" y2="200" stroke="#5A6B3A" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="138" cy="194" rx="14" ry="8" fill="#6A8048" transform="rotate(-15,138,194)"/>
+      <line x1="160" y1="289" x2="152" y2="190" stroke="#5A6B3A" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="152" cy="183" rx="17" ry="11" fill="#8FA67A" transform="rotate(8,152,183)"/>
+      <line x1="178" y1="289" x2="180" y2="165" stroke="#5A6B3A" stroke-width="2" stroke-linecap="round"/><ellipse cx="180" cy="158" rx="15" ry="9" fill="#7A9458" transform="rotate(-12,180,158)"/>
+      <line x1="196" y1="289" x2="200" y2="185" stroke="#5A6B3A" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="200" cy="178" rx="16" ry="10" fill="#6A8048" transform="rotate(5,200,178)"/>
+      <line x1="222" y1="289" x2="218" y2="195" stroke="#5A6B3A" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="218" cy="188" rx="14" ry="9" fill="#8FA67A" transform="rotate(-18,218,188)"/>
+      <line x1="240" y1="289" x2="248" y2="172" stroke="#5A6B3A" stroke-width="2" stroke-linecap="round"/><ellipse cx="248" cy="165" rx="17" ry="10" fill="#7A9458" transform="rotate(12,248,165)"/>
+      <line x1="258" y1="289" x2="260" y2="195" stroke="#5A6B3A" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="260" cy="188" rx="13" ry="8" fill="#6A8048" transform="rotate(-8,260,188)"/>
+      <line x1="282" y1="289" x2="278" y2="200" stroke="#5A6B3A" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="278" cy="193" rx="15" ry="9" fill="#8FA67A" transform="rotate(15,278,193)"/>
+      <line x1="300" y1="289" x2="308" y2="180" stroke="#5A6B3A" stroke-width="2" stroke-linecap="round"/><ellipse cx="308" cy="173" rx="14" ry="9" fill="#7A9458" transform="rotate(-10,308,173)"/>
+      <line x1="318" y1="289" x2="322" y2="205" stroke="#5A6B3A" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="322" cy="198" rx="13" ry="8" fill="#6A8048" transform="rotate(6,322,198)"/>
+      <rect x="148" y="322" width="124" height="18" rx="3" fill="#7A5C3A" opacity="0.2"/>
+      <text x="210" y="335" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#5C3D1E" opacity="0.7" letter-spacing="1.5">OJAS MICROGREENS</text>
+      <circle cx="340" cy="80" r="48" fill="#F0C070" opacity="0.13"/>
+      <circle cx="340" cy="80" r="30" fill="#E8A840" opacity="0.16"/>
+    </svg>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat"><span class="stat-num" id="variety-count">6</span><span class="stat-label">Varieties</span></div>
+  <div class="stat"><span class="stat-num">40&times;</span><span class="stat-label">More nutrients than mature plants</span></div>
+  <div class="stat"><span class="stat-num">7&ndash;14</span><span class="stat-label">Days from seed to harvest</span></div>
+  <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Chemical-free growing</span></div>
+</div>
+
+<section id="products">
+  <div class="products-header">
+    <span class="section-eyebrow">What we grow</span>
+    <h2 class="section-title">Our microgreens</h2>
+    <p class="section-sub">Every tray is grown indoors in clean, controlled conditions &mdash; harvested to order so you always get peak freshness.</p>
+  </div>
+  <div class="products-grid" id="products-grid"></div>
+</section>
+
+<section id="about">
+  <div class="about-visual">
+    <svg viewBox="0 0 320 300" width="280" height="260" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="160" cy="210" rx="100" ry="22" fill="#7A5C3A" opacity="0.12"/>
+      <rect x="90" y="170" width="140" height="42" rx="5" fill="#7A5C3A" opacity="0.2"/>
+      <rect x="96" y="155" width="128" height="20" rx="3" fill="#5C3D1E" opacity="0.18"/>
+      <line x1="110" y1="154" x2="106" y2="120" stroke="#5A6B3A" stroke-width="2" stroke-linecap="round"/><ellipse cx="106" cy="115" rx="10" ry="6" fill="#7A9458"/>
+      <line x1="126" y1="154" x2="124" y2="105" stroke="#5A6B3A" stroke-width="2" stroke-linecap="round"/><ellipse cx="124" cy="100" rx="11" ry="7" fill="#8FA67A"/>
+      <line x1="142" y1="154" x2="144" y2="112" stroke="#5A6B3A" stroke-width="2" stroke-linecap="round"/><ellipse cx="144" cy="107" rx="10" ry="6" fill="#6A8048"/>
+      <line x1="160" y1="154" x2="160" y2="100" stroke="#5A6B3A" stroke-width="2" stroke-linecap="round"/><ellipse cx="160" cy="95" rx="12" ry="7" fill="#7A9458"/>
+      <line x1="178" y1="154" x2="178" y2="108" stroke="#5A6B3A" stroke-width="2" stroke-linecap="round"/><ellipse cx="178" cy="103" rx="10" ry="6" fill="#8FA67A"/>
+      <circle cx="270" cy="55" r="28" fill="#F0C070" opacity="0.2"/>
+    </svg>
+  </div>
+  <div class="about-text">
+    <span class="section-eyebrow">Our story</span>
+    <h2 class="section-title">Grown with intention, for your wellbeing</h2>
+    <p class="section-sub">Ojas &mdash; meaning vitality in Sanskrit &mdash; was born from a simple belief: that the most nourishing food should also be the most accessible. We grow every tray ourselves, with care and zero shortcuts.</p>
+    <div class="about-values">
+      <div class="about-value"><div class="value-dot"></div><p class="value-text"><strong>No pesticides, ever.</strong> We grow clean so you eat clean.</p></div>
+      <div class="about-value"><div class="value-dot"></div><p class="value-text"><strong>Harvested to order.</strong> You get greens at peak nutrition, not sitting in a store for days.</p></div>
+      <div class="about-value"><div class="value-dot"></div><p class="value-text"><strong>Small batch, always fresh.</strong> We keep batches small so every tray gets full attention.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="order">
+  <div class="order-header">
+    <span class="section-eyebrow">Ready to start?</span>
+    <h2 class="section-title">Ordering is simple</h2>
+    <p class="section-sub">No complicated forms. Just reach out and we will take care of everything.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><p class="step-title">Choose your greens</p><p class="step-desc">Pick from our varieties or go for a mixed tray for a bit of everything.</p></div>
+    <div class="step"><div class="step-num">02</div><p class="step-title">Send us a message</p><p class="step-desc">WhatsApp or call us with your order. We will confirm availability and delivery details right away.</p></div>
+    <div class="step"><div class="step-num">03</div><p class="step-title">Receive fresh greens</p><p class="step-desc">We harvest to order and deliver at their freshest, ready to eat.</p></div>
+  </div>
+  <div class="order-cta">
+    <div class="order-cta-text">
+      <h3>Ready to order?</h3>
+      <p>We are just a message away. WhatsApp or call us to place your first order.</p>
+    </div>
+    <a href="https://wa.me/919986009213" class="btn-whatsapp">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#5A6B3A"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.128.558 4.122 1.532 5.855L.057 23.625a.75.75 0 0 0 .918.918l5.77-1.476A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75A9.742 9.742 0 0 1 6.545 20.1l-.36-.214-3.726.953.97-3.638-.234-.373A9.757 9.757 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z" fill="#5A6B3A"/></svg>
+      WhatsApp Us
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Ojas <span>Microgreens</span></div>
+  <p>2025 Ojas Microgreens. Grown with love.</p>
+</footer>
+
+<!-- ADMIN OVERLAY -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+
+    <!-- LOGIN SCREEN -->
+    <div class="login-screen" id="loginScreen">
+      <div class="login-icon">&#128274;</div>
+      <h2>Admin Login</h2>
+      <p>Enter your password to manage microgreens</p>
+      <div class="login-field">
+        <input type="password" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/>
+        <button class="login-toggle" onclick="togglePw()" title="Show/hide password">&#128065;</button>
+      </div>
+      <div class="login-error" id="login-error"></div>
+      <button class="btn-login" onclick="doLogin()">Login</button>
+      <p class="login-hint">Default password: <strong>ojas2025</strong><br>Change it inside the panel after logging in.</p>
+    </div>
+
+    <!-- ADMIN PANEL (shown after login) -->
+    <div class="admin-panel-inner" id="adminPanelInner">
+      <div class="admin-header">
+        <h2>Manage Microgreens</h2>
+        <div class="admin-header-right">
+          <button class="admin-logout" onclick="doLogout()">&#128275; Logout</button>
+          <button class="admin-close" onclick="closeAdmin()">&#x2715;</button>
+        </div>
+      </div>
+      <div class="admin-body">
+
+        <span class="admin-section-title">Add a new green</span>
+        <div class="add-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="input-name" placeholder="e.g. Mustard"/>
+            </div>
+            <div class="form-group">
+              <label>Emoji</label>
+              <input type="text" id="input-emoji" placeholder="e.g. &#127807;" maxlength="4"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <label>Description</label>
+              <textarea id="input-desc" placeholder="Describe the taste, use, and appeal..."></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Benefit Tag</label>
+              <input type="text" id="input-tag" placeholder="e.g. Rich in Iron"/>
+            </div>
+            <div class="form-group">
+              <label>Card Colour</label>
+              <select id="input-bg">
+                <option value="#EDF4E8">Soft Green</option>
+                <option value="#FFF8E7">Warm Yellow</option>
+                <option value="#FFF0EC">Light Coral</option>
+                <option value="#F4F9EE">Pale Lime</option>
+                <option value="#F7F3EC">Parchment</option>
+                <option value="#EEF0F8">Cool Lavender</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-add" onclick="addProduct()">+ Add to Website</button>
+        </div>
+
+        <span class="admin-section-title">Current greens (<span id="admin-count">0</span>)</span>
+        <div class="admin-products-list" id="admin-products-list"></div>
+
+        <!-- CHANGE PASSWORD -->
+        <div class="change-pw-form" style="margin-top:2rem;">
+          <span class="admin-section-title" style="margin-bottom:1rem;">Change Admin Password</span>
+          <div class="form-row">
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" id="new-pw" placeholder="Enter new password"/>
+            </div>
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input type="password" id="confirm-pw" placeholder="Confirm new password"/>
+            </div>
+          </div>
+          <button class="btn-add" onclick="changePassword()">Update Password</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  var DEFAULT_PRODUCTS = [
+    { id: 1, name: "Sunflower", emoji: "\uD83C\uDF3B", desc: "Crunchy, nutty, and satisfying - the most popular microgreen for salads and bowls.", tag: "High in Vitamin E", bg: "#FFF8E7" },
+    { id: 2, name: "Pea Shoots", emoji: "\uD83C\uDF3F", desc: "Sweet, tender, and fresh - taste just like a garden pea. Great raw or lightly sauteed.", tag: "Rich in Protein", bg: "#EDF4E8" },
+    { id: 3, name: "Radish", emoji: "\uD83C\uDF31", desc: "Peppery and vibrant, with a beautiful pink-red stem. Adds a zing to any dish.", tag: "Antioxidant-rich", bg: "#FFF0EC" },
+    { id: 4, name: "Broccoli", emoji: "\uD83E\uDD66", desc: "Mild and earthy, loaded with sulforaphane - one of nature's most powerful compounds.", tag: "Sulforaphane Source", bg: "#EDF4E8" },
+    { id: 5, name: "Wheatgrass", emoji: "\uD83C\uDF3E", desc: "The classic superfood green. Perfect for daily shots to boost immunity and energy.", tag: "Chlorophyll-dense", bg: "#F4F9EE" },
+    { id: 6, name: "Mixed Trays", emoji: "\uD83C\uDF3F", desc: "A curated blend of our best varieties - the easiest way to enjoy a full spectrum of flavours and nutrients.", tag: "Best Value", bg: "#F7F3EC" }
+  ];
+
+  var DEFAULT_PASSWORD = "ojas2025";
+  var sessionAuthed = false;
+
+  function getPassword() {
+    return localStorage.getItem('ojas_admin_pw') || DEFAULT_PASSWORD;
+  }
+
+  function loadProducts() {
+    try {
+      var s = localStorage.getItem('ojas_products');
+      return s ? JSON.parse(s) : DEFAULT_PRODUCTS.slice();
+    } catch(e) { return DEFAULT_PRODUCTS.slice(); }
+  }
+
+  function saveProducts(products) {
+    try { localStorage.setItem('ojas_products', JSON.stringify(products)); } catch(e) {}
+  }
+
+  function renderProducts() {
+    var products = loadProducts();
+    var grid = document.getElementById('products-grid');
+    document.getElementById('variety-count').textContent = products.length;
+    if (products.length === 0) {
+      grid.innerHTML = '<div class="empty-products"><span>\uD83C\uDF31</span>No microgreens listed yet. Open Admin to add some!</div>';
+      return;
+    }
+    grid.innerHTML = products.map(function(p) {
+      return '<div class="product-card"><div class="product-img" style="background:' + p.bg + '">' + p.emoji + '</div><div class="product-body"><p class="product-name">' + p.name + '</p><p class="product-desc">' + p.desc + '</p><span class="product-tag">' + p.tag + '</span></div></div>';
+    }).join('');
+  }
+
+  function renderAdminList() {
+    var products = loadProducts();
+    document.getElementById('admin-count').textContent = products.length;
+    var list = document.getElementById('admin-products-list');
+    if (products.length === 0) {
+      list.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;text-align:center;padding:1rem 0;">No greens added yet.</p>';
+      return;
+    }
+    list.innerHTML = products.map(function(p) {
+      return '<div class="admin-product-item"><div class="admin-product-emoji">' + p.emoji + '</div><div class="admin-product-info"><strong>' + p.name + '</strong><span>' + p.tag + ' - ' + p.desc.substring(0,55) + '...</span></div><button class="btn-delete" onclick="deleteProduct(' + p.id + ')">Remove</button></div>';
+    }).join('');
+  }
+
+  function addProduct() {
+    var name = document.getElementById('input-name').value.trim();
+    var emoji = document.getElementById('input-emoji').value.trim() || '\uD83C\uDF3F';
+    var desc = document.getElementById('input-desc').value.trim();
+    var tag = document.getElementById('input-tag').value.trim();
+    var bg = document.getElementById('input-bg').value;
+    if (!name || !desc || !tag) { showToast('Please fill in Name, Description, and Benefit Tag.'); return; }
+    var products = loadProducts();
+    products.push({ id: Date.now(), name: name, emoji: emoji, desc: desc, tag: tag, bg: bg });
+    saveProducts(products);
+    renderProducts();
+    renderAdminList();
+    document.getElementById('input-name').value = '';
+    document.getElementById('input-emoji').value = '';
+    document.getElementById('input-desc').value = '';
+    document.getElementById('input-tag').value = '';
+    showToast(name + ' added to your website!');
+  }
+
+  function deleteProduct(id) {
+    var products = loadProducts().filter(function(p) { return p.id !== id; });
+    saveProducts(products);
+    renderProducts();
+    renderAdminList();
+    showToast('Green removed from website.');
+  }
+
+  function changePassword() {
+    var np = document.getElementById('new-pw').value;
+    var cp = document.getElementById('confirm-pw').value;
+    if (!np || np.length < 4) { showToast('Password must be at least 4 characters.'); return; }
+    if (np !== cp) { showToast('Passwords do not match.'); return; }
+    localStorage.setItem('ojas_admin_pw', np);
+    document.getElementById('new-pw').value = '';
+    document.getElementById('confirm-pw').value = '';
+    showToast('Password updated successfully!');
+  }
+
+  function openAdmin() {
+    document.getElementById('adminOverlay').classList.add('open');
+    document.getElementById('pw-input').value = '';
+    document.getElementById('login-error').textContent = '';
+    if (sessionAuthed) {
+      showPanel();
+    } else {
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('adminPanelInner').classList.remove('visible');
+      setTimeout(function() { document.getElementById('pw-input').focus(); }, 100);
+    }
+  }
+
+  function closeAdmin() {
+    document.getElementById('adminOverlay').classList.remove('open');
+  }
+
+  function doLogin() {
+    var entered = document.getElementById('pw-input').value;
+    var errEl = document.getElementById('login-error');
+    if (entered === getPassword()) {
+      sessionAuthed = true;
+      errEl.textContent = '';
+      showPanel();
+    } else {
+      errEl.textContent = 'Incorrect password. Please try again.';
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  }
+
+  function showPanel() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanelInner').classList.add('visible');
+    renderAdminList();
+  }
+
+  function doLogout() {
+    sessionAuthed = false;
+    document.getElementById('adminPanelInner').classList.remove('visible');
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('login-error').textContent = '';
+  }
+
+  function togglePw() {
+    var inp = document.getElementById('pw-input');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+
+  document.getElementById('adminOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeAdmin();
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 3000);
+  }
+
+  renderProducts();
+</script>
+</body>
+</html>
